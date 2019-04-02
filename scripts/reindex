@@ -1,0 +1,19 @@
+#!/bin/bash
+
+function greenecho {
+    echo "" && echo -e "\e[30;48;5;82m ✔ $1 \e[0m"
+}
+function orangeecho {
+    echo "" && echo -e "\e[30;48;5;208m ⚠ $1 \e[0m"
+}
+
+# Get document root path
+DOCUMENT_ROOT=$(drush status --fields=root --format=list)
+
+# Git repo root
+cd $DOCUMENT_ROOT && cd ..
+
+# Reindex search_api content
+greenecho "Re-Index content"
+drush search-api:clear default
+drush search-api:index default
